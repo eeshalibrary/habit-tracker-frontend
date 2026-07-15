@@ -25,6 +25,7 @@ function HabitCard({ habit, onLogAdded }) {
       })
       .catch((err) => console.error("Failed to fetch logs", err));
   };
+// eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     fetchLogs();

@@ -20,6 +20,8 @@ function Dashboard({ username }) {
       .catch((err) => console.error("Failed to fetch habits", err));
 };
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     fetchHabits();
   }, [username]);
