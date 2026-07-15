@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://habit-tracker-backend-512u.onrender.com";
 
 function AddHabitForm({ username, onHabitAdded }) {
   const [name, setName] = useState("");

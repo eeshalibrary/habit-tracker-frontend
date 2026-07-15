@@ -3,7 +3,7 @@ import axios from "axios";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://habit-tracker-backend-512u.onrender.com";
 
 function HabitCard({ habit, onLogAdded }) {
   const [logs, setLogs] = useState([]);
