@@ -9,6 +9,8 @@ const API_BASE = "https://habit-tracker-backend-512u.onrender.com";
 function HabitCard({ habit, onLogAdded }) {
   const [logs, setLogs] = useState([]);
   const [value, setValue] = useState("");
+  const [insight, setInsight] = useState("");
+  const [loadingInsight, setLoadingInsight] = useState(false);
 
   const fetchLogs = () => {
     const end = new Date().toISOString().split("T")[0];
@@ -27,7 +29,6 @@ function HabitCard({ habit, onLogAdded }) {
       .catch((err) => console.error("Failed to fetch logs", err));
   };
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchLogs();
   }, [habit.id]);
@@ -47,6 +48,20 @@ function HabitCard({ habit, onLogAdded }) {
         onLogAdded();
       })
       .catch((err) => console.error("Failed to log value", err));
+  };
+
+  const fetchInsight = () => {
+    setLoadingInsight(true);
+    axios
+      .get(`${API_BASE}/habits/${habit.id}/insights`)
+      .then((res) => {
+        setInsight(res.data);
+        setLoadingInsight(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch insight", err);
+        setLoadingInsight(false);
+      });
   };
 
   const heatmapData = logs.map((log) => ({
@@ -102,6 +117,20 @@ function HabitCard({ habit, onLogAdded }) {
         >
           Log
         </button>
+      </div>
+
+      <div className="mt-4">
+        <button
+          onClick={fetchInsight}
+          className="text-sm bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition"
+        >
+          {loadingInsight ? "Thinking..." : "✨ Get AI Insight"}
+        </button>
+        {insight && (
+          <p className="mt-3 text-gray-600 text-sm bg-purple-50 p-3 rounded-lg border border-purple-100">
+            {insight}
+          </p>
+        )}
       </div>
     </div>
   );
